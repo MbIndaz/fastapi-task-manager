@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #1e293b;
+            padding: 32px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-right: 1px solid #334155;
+            min-height: 100vh;
+        }
+        .sidebar h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 24px;
+            padding-left: 12px;
+            letter-spacing: -0.5px;
+        }
+        .sidebar h2 span { color: #6366f1; }
+        .nav-item {
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-item.active, .nav-item:hover {
+            background: #334155;
+            color: #f1f5f9;
+        }
+
+        /* Main content */
+        .main {
+            flex: 1;
+            padding: 40px 48px;
+            max-width: 860px;
+        }
+        .page-header {
+            margin-bottom: 32px;
+        }
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #f8fafc;
+            letter-spacing: -0.5px;
+        }
+        .page-header p {
+            color: #64748b;
+            margin-top: 4px;
+            font-size: 14px;
+        }
+
+        /* Form */
+        .form-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+        .form-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+        .form-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .form-inputs { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        input, textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #f1f5f9;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input:focus, textarea:focus { border-color: #6366f1; }
+        input::placeholder, textarea::placeholder { color: #475569; }
+        textarea { resize: none; }
+        button.btn-add {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+            transition: background 0.2s;
+            align-self: flex-start;
+        }
+        button.btn-add:hover { background: #4f46e5; }
+
+        /* Task list */
+        .task-list-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+        #task-list { display: flex; flex-direction: column; gap: 10px; }
+
+        .task-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            transition: border-color 0.2s;
+        }
+        .task-card:hover { border-color: #475569; }
+        .task-card.completed { opacity: 0.45; }
+        .task-card.completed .task-title { text-decoration: line-through; }
+
+        .task-left { display: flex; align-items: center; gap: 14px; flex: 1; }
+        .task-check {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            border: 2px solid #334155;
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .completed .task-check {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+        .task-title { font-size: 15px; font-weight: 500; color: #f1f5f9; }
+        .task-desc { font-size: 13px; color: #64748b; margin-top: 2px; }
+
+        .task-actions { display: flex; gap: 8px; }
+        .btn-done {
+            background: transparent;
+            border: 1px solid #334155;
+            color: #22c55e;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+        .btn-done:hover { background: #22c55e20; border-color: #22c55e; }
+        .btn-delete {
+            background: transparent;
+            border: 1px solid #334155;
+            color: #f87171;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+        .btn-delete:hover { background: #f8717120; border-color: #f87171; }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 0;
+            color: #475569;
+            font-size: 14px;
+        }
+        .htmx-indicator { display: none; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Task<span>Flow</span></h2>
+        <div class="nav-item active">📋 My Tasks</div>
+        <div class="nav-item">✅ Completed</div>
+        <div class="nav-item">⚙️ Settings</div>
+    </div>
+    <div class="main">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
