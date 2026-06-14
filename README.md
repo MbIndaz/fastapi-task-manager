@@ -9,7 +9,7 @@ A task management web app built with FastAPI, Jinja2 templates, and HTMX for dyn
 - **HTMX** — Dynamic UI updates without JavaScript
 - **SQLAlchemy** — Database ORM
 - **PostgreSQL** — Database
-- **Alembic** — Database migrations (coming soon)
+- **Alembic** — Database migrations
 
 ## Features
 
@@ -18,6 +18,7 @@ A task management web app built with FastAPI, Jinja2 templates, and HTMX for dyn
 -  Completed tasks view
 -  Modern dark UI with sidebar navigation
 -  Dynamic updates without page reloads (HTMX)
+-  Database migrations with Alembic
 
 ## Getting Started
 
@@ -65,6 +66,15 @@ uvicorn app.main:app --reload
 
 FastAPI automatically generates interactive API documentation at:
 `http://127.0.0.1:8000/docs`
+
+## Database Migrations
+
+Alembic handles all database schema changes. To create a new migration after changing models:
+
+```bash
+alembic revision --autogenerate -m "description of change"
+alembic upgrade head
+```
 
 ## Author
 
