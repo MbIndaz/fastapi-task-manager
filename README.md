@@ -6,16 +6,18 @@ A task management web app built with FastAPI, Jinja2 templates, and HTMX for dyn
 
 - **FastAPI** — Python web framework
 - **Jinja2** — Server-side HTML templating
-- **HTMX** — Dynamic UI updates without writing JavaScript
+- **HTMX** — Dynamic UI updates without JavaScript
 - **SQLAlchemy** — Database ORM
 - **PostgreSQL** — Database
-- **Alembic** — Database migrations
+- **Alembic** — Database migrations (coming soon)
 
 ## Features
 
-- Create and delete tasks
-- Real-time page updates via HTMX (no full page reloads)
-- RESTful API endpoints
+-  Create and delete tasks
+-  Mark tasks as completed
+-  Completed tasks view
+-  Modern dark UI with sidebar navigation
+-  Dynamic updates without page reloads (HTMX)
 
 ## Getting Started
 
@@ -26,38 +28,67 @@ A task management web app built with FastAPI, Jinja2 templates, and HTMX for dyn
 
 ### Installation
 
+1. Clone the repo
 ```bash
-# Clone the repo
-git clone https://github.com/MbIndaz/fastapi-task-manager
+git clone https://github.com/MbIndaz/fastapi-task-manager.git
 cd fastapi-task-manager
-
-# Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Copy environment variables
-cp .env.example .env
-# Edit .env with your database credentials
-
-# Run the app
-uvicorn main:app --reload
 ```
 
-Open http://localhost:8000
+2. Create and activate virtual environment
+```bash
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Mac/Linux
+```
+
+3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+4. Set up environment variables — create a `.env` file:
+DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/taskmanager
+
+5. Create the database
+```bash
+psql -U postgres -c "CREATE DATABASE taskmanager;"
+```
+
+6. Run the app
+```bash
+uvicorn app.main:app --reload
+```
+
+7. Open your browser at `http://127.0.0.1:8000`
+
+## API Docs
+
+FastAPI automatically generates interactive API documentation at:
+`http://127.0.0.1:8000/docs`
+
+## Author
+
+Miguel — [GitHub](https://github.com/MbIndaz)
 
 ## Project Structure
 
 ```
 fastapi-task-manager/
-├── main.py
-├── templates/
-│   ├── base.html
-│   ├── index.html
-│   └── partials/
-│       └── task_list.html
+├── app/
+│   ├── main.py             # App entry point and routes
+│   ├── database.py         # Database connection
+│   ├── models.py           # SQLAlchemy table definitions
+│   ├── schemas.py          # Pydantic validation
+│   ├── routers/
+│   │   └── tasks.py        # Task endpoints
+│   └── templates/
+│       ├── base.html       # Shared layout
+│       ├── index.html      # My Tasks page
+│       ├── completed.html  # Completed page
+│       ├── settings.html   # Settings page
+│       └── partials/
+│           └── task_list.html
+├── .env
 ├── requirements.txt
-└── .env.example
+└── README.md
 ```
