@@ -46,3 +46,8 @@ def update_task(request: Request, task_id: int, db: Session = Depends(get_db)):
     db_task.completed = True
     db.commit()
     return render_task_list(request, db)
+
+@router.get("/completed", response_class=HTMLResponse)
+def get_completed_html(request: Request, db: Session = Depends(get_db)):
+    tasks = db.query(models.Task).filter(models.Task.completed == True).all()
+    return templates.TemplateResponse(request, "partials/task_list.html", {"tasks": tasks})

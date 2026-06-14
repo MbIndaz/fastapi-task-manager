@@ -8,11 +8,18 @@ from app.routers import tasks
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Task Manager")
-
 templates = Jinja2Templates(directory="app/templates")
 
 app.include_router(tasks.router)
 
 @app.get("/", response_class=HTMLResponse)
 def root(request: Request):
-    return templates.TemplateResponse(request, "index.html")
+    return templates.TemplateResponse(request, "index.html", {"active": "tasks"})
+
+@app.get("/completed", response_class=HTMLResponse)
+def completed(request: Request):
+    return templates.TemplateResponse(request, "completed.html", {"active": "completed"})
+
+@app.get("/settings", response_class=HTMLResponse)
+def settings(request: Request):
+    return templates.TemplateResponse(request, "settings.html", {"active": "settings"})
