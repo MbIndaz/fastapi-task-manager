@@ -205,15 +205,19 @@
             font-size: 14px;
         }
         .htmx-indicator { display: none; }
+
+        a.nav-item {
+    text-decoration: none;
+}
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <h2>Task<span>Flow</span></h2>
-        <div class="nav-item active">📋 My Tasks</div>
-        <div class="nav-item">✅ Completed</div>
-        <div class="nav-item">⚙️ Settings</div>
-    </div>
+    <h2>Task<span>Flow</span></h2>
+    <a href="/" class="nav-item {% if active == 'tasks' %}active{% endif %}">📋 My Tasks</a>
+    <a href="/completed" class="nav-item {% if active == 'completed' %}active{% endif %}">✅ Completed</a>
+    <a href="/settings" class="nav-item {% if active == 'settings' %}active{% endif %}">⚙️ Settings</a>
+</div>
     <div class="main">
         {% block content %}{% endblock %}
     </div>

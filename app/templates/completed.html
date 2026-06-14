@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Completed Tasks</h1>
+    <p>Everything you've knocked out. Nice work!</p>
+</div>
+
+<div class="task-list-header">Completed</div>
+<div id="completed-list"
+     hx-get="/tasks/completed"
+     hx-trigger="load">
+</div>
+{% endblock %}
