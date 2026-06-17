@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Login</h1>
+    <p>Welcome back to TaskFlow.</p>
+</div>
+
+<div class="form-card">
+    <form hx-post="/auth/login-form" hx-target="#login-error" hx-swap="innerHTML">
+        <div class="form-inputs">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <div id="login-error" style="color:#f87171; font-size: 13px; margin-top: 8px;"></div>
+        <button type="submit" class="btn-add" style="margin-top: 12px;">Log In</button>
+    </form>
+    <p style="margin-top: 16px; font-size: 13px; color: #64748b;">
+        Don't have an account? <a href="/register" style="color:#6366f1;">Register</a>
+    </p>
+</div>
+{% endblock %}
