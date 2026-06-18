@@ -19,16 +19,16 @@ A modern task management web app built with FastAPI, Jinja2, HTMX, SQLAlchemy an
 
 ## Features
 
-- ✅ User registration and login
-- ✅ JWT authentication with cookies
-- ✅ Tasks scoped per user
-- ✅ Create and delete tasks
-- ✅ Mark tasks as completed
-- ✅ Completed tasks view
-- ✅ Modern dark UI with sidebar navigation
-- ✅ Dynamic updates without page reloads (HTMX)
-- ✅ Database migrations with Alembic
-- ✅ Protected routes with auth redirect
+-  User registration and login
+-  JWT authentication with cookies
+-  Tasks scoped per user
+-  Create and delete tasks
+-  Mark tasks as completed
+-  Completed tasks view
+-  Modern dark UI with sidebar navigation
+-  Dynamic updates without page reloads (HTMX)
+-  Database migrations with Alembic
+-  Protected routes with auth redirect
 
 ## Project Structure
 
