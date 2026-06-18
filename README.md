@@ -31,30 +31,32 @@ A modern task management web app built with FastAPI, Jinja2, HTMX, SQLAlchemy an
 - ✅ Protected routes with auth redirect
 
 ## Project Structure
-fastapi-task-manager/
 
+```
+fastapi-task-manager/
 ├── app/
-│   ├── main.py             # App entry point and routes
-│   ├── database.py         # Database connection
-│   ├── models.py           # SQLAlchemy table definitions
-│   ├── schemas.py          # Pydantic validation
-│   ├── auth.py             # JWT and password utilities
+│   ├── main.py               # App entry point and routes
+│   ├── database.py           # Database connection
+│   ├── models.py             # SQLAlchemy table definitions
+│   ├── schemas.py            # Pydantic validation
+│   ├── auth.py               # JWT and password utilities
 │   ├── routers/
-│   │   ├── tasks.py        # Task endpoints
-│   │   └── auth.py         # Auth endpoints
+│   │   ├── tasks.py          # Task endpoints
+│   │   └── auth.py           # Auth endpoints
 │   └── templates/
-│       ├── base.html       # Shared layout
-│       ├── index.html      # My Tasks page
-│       ├── completed.html  # Completed page
-│       ├── settings.html   # Settings page
-│       ├── login.html      # Login page
-│       ├── register.html   # Register page
+│       ├── base.html         # Shared layout
+│       ├── index.html        # My Tasks page
+│       ├── completed.html    # Completed page
+│       ├── settings.html     # Settings page
+│       ├── login.html        # Login page
+│       ├── register.html     # Register page
 │       └── partials/
 │           └── task_list.html
-├── alembic/                # Database migrations
-├── .env                    # Environment variables (not committed)
+├── alembic/                  # Database migrations
+├── .env                      # Environment variables (not committed)
 ├── requirements.txt
 └── README.md
+```
 
 ## Getting Started
 
