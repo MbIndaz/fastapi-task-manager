@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Register</h1>
+    <p>Create your TaskFlow account.</p>
+</div>
+
+<div class="form-card">
+    <form hx-post="/auth/register-form" hx-target="#register-error" hx-swap="innerHTML">
+        <div class="form-inputs">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password (min 8 characters)" required minlength="8">
+        </div>
+        <div id="register-error" style="color:#f87171; font-size: 13px; margin-top: 8px;"></div>
+        <button type="submit" class="btn-add" style="margin-top: 12px;">Create Account</button>
+    </form>
+    <p style="margin-top: 16px; font-size: 13px; color: #64748b;">
+        Already have an account? <a href="/login" style="color:#6366f1;">Log in</a>
+    </p>
+</div>
+{% endblock %}

@@ -10,6 +10,8 @@ A task management web app built with FastAPI, Jinja2 templates, and HTMX for dyn
 - **SQLAlchemy** — Database ORM
 - **PostgreSQL** — Database
 - **Alembic** — Database migrations
+- **JWT (python-jose)** — Authentication tokens
+- **Passlib (bcrypt)** — Password hashing
 
 ## Features
 
@@ -19,6 +21,8 @@ A task management web app built with FastAPI, Jinja2 templates, and HTMX for dyn
 -  Modern dark UI with sidebar navigation
 -  Dynamic updates without page reloads (HTMX)
 -  Database migrations with Alembic
+-  User authentication (JWT + cookies)
+-  Tasks scoped per user
 
 ## Getting Started
 
