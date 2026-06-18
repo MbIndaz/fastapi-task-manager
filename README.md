@@ -11,7 +11,8 @@ A task management web app built with FastAPI, Jinja2 templates, and HTMX for dyn
 - **PostgreSQL** — Database
 - **Alembic** — Database migrations
 - **JWT (python-jose)** — Authentication tokens
-- **Passlib (bcrypt)** — Password hashing
+- **Passlib (bcrypt)** — Password hashinggit checkout master
+git pull origin master
 
 ## Features
 
