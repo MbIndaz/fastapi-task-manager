@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.database import engine, get_db
 from app import models
 from app.routers import tasks, auth
+from app.auth import get_current_user, decode_access_token
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -16,27 +17,33 @@ app.include_router(auth.router)
 
 
 @app.get("/", response_class=HTMLResponse)
-def root(request: Request):
+def root(request: Request, db: Session = Depends(get_db)):
     token = request.cookies.get("access_token")
     if not token:
         return RedirectResponse(url="/login")
-    return templates.TemplateResponse(request, "index.html", {"active": "tasks"})
+    payload = decode_access_token(token)
+    user = db.query(models.User).filter(models.User.id == int(payload.get("sub"))).first()
+    return templates.TemplateResponse(request, "index.html", {"active": "tasks", "user": user})
 
 
 @app.get("/completed", response_class=HTMLResponse)
-def completed(request: Request):
+def completed(request: Request, db: Session = Depends(get_db)):
     token = request.cookies.get("access_token")
     if not token:
         return RedirectResponse(url="/login")
-    return templates.TemplateResponse(request, "completed.html", {"active": "completed"})
+    payload = decode_access_token(token)
+    user = db.query(models.User).filter(models.User.id == int(payload.get("sub"))).first()
+    return templates.TemplateResponse(request, "completed.html", {"active": "completed", "user": user})
 
 
 @app.get("/settings", response_class=HTMLResponse)
-def settings(request: Request):
+def settings(request: Request, db: Session = Depends(get_db)):
     token = request.cookies.get("access_token")
     if not token:
         return RedirectResponse(url="/login")
-    return templates.TemplateResponse(request, "settings.html", {"active": "settings"})
+    payload = decode_access_token(token)
+    user = db.query(models.User).filter(models.User.id == int(payload.get("sub"))).first()
+    return templates.TemplateResponse(request, "settings.html", {"active": "settings", "user": user})
 
 
 @app.get("/login", response_class=HTMLResponse)

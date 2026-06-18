@@ -1,22 +1,94 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="page-header">
-    <h1>Login</h1>
-    <p>Welcome back to TaskFlow.</p>
-</div>
-
-<div class="form-card">
-    <form hx-post="/auth/login-form" hx-target="#login-error" hx-swap="innerHTML">
-        <div class="form-inputs">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow — Login</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-box {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .auth-box h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 4px;
+        }
+        .auth-box h1 span { color: #6366f1; }
+        .auth-box p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+        input {
+            width: 100%;
+            padding: 10px 14px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #f1f5f9;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            margin-bottom: 12px;
+            transition: border-color 0.2s;
+        }
+        input:focus { border-color: #6366f1; }
+        input::placeholder { color: #475569; }
+        button {
+            width: 100%;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.2s;
+            margin-top: 4px;
+        }
+        button:hover { background: #4f46e5; }
+        .footer-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #64748b;
+        }
+        .footer-link a { color: #6366f1; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="auth-box">
+        <h1>Task<span>Flow</span></h1>
+        <p>Welcome back! Log in to your account.</p>
+        <form hx-post="/auth/login-form" hx-target="#login-error" hx-swap="innerHTML">
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
+            <div id="login-error" style="color:#f87171; font-size: 13px; margin-bottom: 8px;"></div>
+            <button type="submit">Log In</button>
+        </form>
+        <div class="footer-link">
+            Don't have an account? <a href="/register">Register</a>
         </div>
-        <div id="login-error" style="color:#f87171; font-size: 13px; margin-top: 8px;"></div>
-        <button type="submit" class="btn-add" style="margin-top: 12px;">Log In</button>
-    </form>
-    <p style="margin-top: 16px; font-size: 13px; color: #64748b;">
-        Don't have an account? <a href="/register" style="color:#6366f1;">Register</a>
-    </p>
-</div>
-{% endblock %}
+    </div>
+</body>
+</html>

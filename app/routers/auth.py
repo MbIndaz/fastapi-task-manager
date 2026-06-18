@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, Form, Response
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app import models, schemas, auth
+
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -58,6 +59,6 @@ def login_form(email: str = Form(...), password: str = Form(...), db: Session = 
 
 @router.get("/logout")
 def logout():
-    resp = HTMLResponse(headers={"HX-Redirect": "/login"})
+    resp = RedirectResponse(url="/login")
     resp.delete_cookie("access_token")
     return resp

@@ -214,10 +214,19 @@
 <body>
     <div class="sidebar">
     <h2>Task<span>Flow</span></h2>
+
+    {% if user %}
+    <div style="padding: 10px 12px; margin-bottom: 8px; border-bottom: 1px solid #334155; padding-bottom: 16px;">
+        <div style="font-size: 12px; color: #64748b;">Logged in as</div>
+        <div style="font-size: 13px; color: #f1f5f9; font-weight: 500; margin-top: 2px; word-break: break-all;">{{ user.email }}</div>
+    </div>
+    {% endif %}
+
     <a href="/" class="nav-item {% if active == 'tasks' %}active{% endif %}">📋 My Tasks</a>
     <a href="/completed" class="nav-item {% if active == 'completed' %}active{% endif %}">✅ Completed</a>
     <a href="/settings" class="nav-item {% if active == 'settings' %}active{% endif %}">⚙️ Settings</a>
-    <a href="/auth/logout" class="nav-item">🚪 Logout</a>
+    <a href="/auth/logout" class="nav-item" style="margin-top: auto; color: #f87171;">🚪 Logout</a>
+</div>
 </div>
     <div class="main">
         {% block content %}{% endblock %}

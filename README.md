@@ -1,6 +1,10 @@
-# FastAPI Task Manager
+# TaskFlow
 
-A task management web app built with FastAPI, Jinja2 templates, and HTMX for dynamic page updates without a JavaScript framework.
+A modern task management web app built with FastAPI, Jinja2, HTMX, SQLAlchemy and PostgreSQL.
+
+![Python](https://img.shields.io/badge/Python-3.13-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-latest-green)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-blue)
 
 ## Tech Stack
 
@@ -11,25 +15,52 @@ A task management web app built with FastAPI, Jinja2 templates, and HTMX for dyn
 - **PostgreSQL** — Database
 - **Alembic** — Database migrations
 - **JWT (python-jose)** — Authentication tokens
-- **Passlib (bcrypt)** — Password hashinggit checkout master
-git pull origin master
+- **Passlib (bcrypt)** — Password hashing
 
 ## Features
 
--  Create and delete tasks
--  Mark tasks as completed
--  Completed tasks view
--  Modern dark UI with sidebar navigation
--  Dynamic updates without page reloads (HTMX)
--  Database migrations with Alembic
--  User authentication (JWT + cookies)
--  Tasks scoped per user
+- ✅ User registration and login
+- ✅ JWT authentication with cookies
+- ✅ Tasks scoped per user
+- ✅ Create and delete tasks
+- ✅ Mark tasks as completed
+- ✅ Completed tasks view
+- ✅ Modern dark UI with sidebar navigation
+- ✅ Dynamic updates without page reloads (HTMX)
+- ✅ Database migrations with Alembic
+- ✅ Protected routes with auth redirect
+
+## Project Structure
+fastapi-task-manager/
+
+├── app/
+│   ├── main.py             # App entry point and routes
+│   ├── database.py         # Database connection
+│   ├── models.py           # SQLAlchemy table definitions
+│   ├── schemas.py          # Pydantic validation
+│   ├── auth.py             # JWT and password utilities
+│   ├── routers/
+│   │   ├── tasks.py        # Task endpoints
+│   │   └── auth.py         # Auth endpoints
+│   └── templates/
+│       ├── base.html       # Shared layout
+│       ├── index.html      # My Tasks page
+│       ├── completed.html  # Completed page
+│       ├── settings.html   # Settings page
+│       ├── login.html      # Login page
+│       ├── register.html   # Register page
+│       └── partials/
+│           └── task_list.html
+├── alembic/                # Database migrations
+├── .env                    # Environment variables (not committed)
+├── requirements.txt
+└── README.md
 
 ## Getting Started
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.13+
 - PostgreSQL
 
 ### Installation
@@ -52,20 +83,27 @@ source venv/bin/activate  # Mac/Linux
 pip install -r requirements.txt
 ```
 
-4. Set up environment variables — create a `.env` file:
+4. Create a `.env` file:
 DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/taskmanager
+
+SECRET_KEY=your-secret-key-here
 
 5. Create the database
 ```bash
 psql -U postgres -c "CREATE DATABASE taskmanager;"
 ```
 
-6. Run the app
+6. Run migrations
+```bash
+alembic upgrade head
+```
+
+7. Run the app
 ```bash
 uvicorn app.main:app --reload
 ```
 
-7. Open your browser at `http://127.0.0.1:8000`
+8. Open your browser at `http://127.0.0.1:8000`
 
 ## API Docs
 
@@ -84,26 +122,3 @@ alembic upgrade head
 ## Author
 
 Miguel — [GitHub](https://github.com/MbIndaz)
-
-## Project Structure
-
-```
-fastapi-task-manager/
-├── app/
-│   ├── main.py             # App entry point and routes
-│   ├── database.py         # Database connection
-│   ├── models.py           # SQLAlchemy table definitions
-│   ├── schemas.py          # Pydantic validation
-│   ├── routers/
-│   │   └── tasks.py        # Task endpoints
-│   └── templates/
-│       ├── base.html       # Shared layout
-│       ├── index.html      # My Tasks page
-│       ├── completed.html  # Completed page
-│       ├── settings.html   # Settings page
-│       └── partials/
-│           └── task_list.html
-├── .env
-├── requirements.txt
-└── README.md
-```
